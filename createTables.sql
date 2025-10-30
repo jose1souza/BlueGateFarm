@@ -32,6 +32,12 @@ CREATE TABLE usuario_permissao (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE cultura (
+  id_cultura INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  classificacao_mercado VARCHAR(50)
+);
+
 CREATE TABLE funcionario (
   id_funcionario INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
@@ -71,12 +77,6 @@ CREATE TABLE uso_maquinario (
   combustivel_consumido DECIMAL(10,2),
   FOREIGN KEY (id_maquina) REFERENCES maquinario(id_maquina),
   FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario)
-);
-
-CREATE TABLE cultura (
-  id_cultura INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100) NOT NULL,
-  classificacao_mercado VARCHAR(50)
 );
 
 CREATE TABLE cultivo (
