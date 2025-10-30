@@ -1,0 +1,36 @@
+# ------------------------------------
+# 1. Ambientes Virtuais e Dependências
+# ------------------------------------
+# Ambiente virtual do Python
+venv/
+.venv/
+# Arquivos de instalação de pacotes
+pip-log.txt
+.history/
+
+# ------------------------------------
+# 2. Arquivos de Configuração Secreta
+# ------------------------------------
+# O arquivo que contém as credenciais do DB e a SECRET_KEY
+.env
+
+# ------------------------------------
+# 3. Arquivos de Cache e Build
+# ------------------------------------
+# Pasta de cache de bytecode do Python
+__pycache__/
+*.pyc
+# Arquivos de metadados do Python
+*.egg-info/
+.pytest_cache/
+
+# ------------------------------------
+# 4. Arquivos do Sistema Operacional (macOS e Windows)
+# ------------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------------
+# 5. Arquivos de IDEs Comuns (VS Code)
+# ------------------------------------
+.vscode/
