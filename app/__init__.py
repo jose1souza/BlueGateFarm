@@ -27,7 +27,7 @@ def create_app(config_class=Config):
 
    
     
-  
+
     from .auth import routes as auth_routes 
     app.register_blueprint(auth_routes.auth_bp) 
 
@@ -41,5 +41,8 @@ def create_app(config_class=Config):
    
     from .api import routes as api_routes 
     app.register_blueprint(api_routes.api, url_prefix='/api/v1') 
+    
+    from app.cultura.routes import cultura_bp
+    app.register_blueprint(cultura_bp)
     
     return app
