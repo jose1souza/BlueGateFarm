@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+  <head>
+    <title>Funcionários</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div class="grid-container">
+
+      <nav class="grid-items-menu">
+        <p>aqui vai ser o nav</p>
+      </nav>
+
+      <aside class="grid-items left">
+        <span>Cadastro de Funcionários </span>
+        <button onclick="openModal()" id="new">Incluir</button>
+      </aside>
+
+      <main class="grid-items main">
+        <div class="divTable">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Função</th>
+                <th>Salário</th>
+                <th class="acao">Editar</th>
+                <th class="acao">Excluir</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="modal-container">
+          <div class="modal">
+            <form>
+              <label for="m-nome">Nome</label>
+              <input id="m-nome" type="text" required />
+
+              <label for="m-funcao">Funcao</label>
+              <input id="m-funcao" type="text" required />
+
+              <label for="m-salario">Salário</label>
+              <input id="m-salario" type="number" required />
+
+              <button id="btnSalvar">Salvar</button>
+              <button type="button" onclick="closeModal()">Fechar</button>
+            </form>
+          </div>
+        </div>
+      </main>
+
+      <aside class="grid-items right">
+        
+      </aside>
+
+      <!-- footer pra alguém criar depois-->
+       <footer class="grid-item footer">
+        <p>Footer a ser criado</p>
+       </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+
+</html>
