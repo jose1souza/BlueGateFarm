@@ -4,3 +4,4 @@ PyMySQL==1.1.0
 python-dotenv==1.0.0
 Flask-Bootstrap==3.3.7.1
 Flask-RESTful==0.3.10
+Flask-Login==0.6.3
