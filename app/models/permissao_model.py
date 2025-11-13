@@ -1,6 +1,6 @@
 from app import db 
 
-class permissao(db.Model):
+class Permissao(db.Model):
     __tablename__ = 'permissao'
 
     id_permissao = db.Column(db.Integer, primary_key=True)
