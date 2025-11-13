@@ -20,6 +20,11 @@
         border: none;
         border-radius: 10px;
       }
+      .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+        border-radius: 10px;
+      }
       .btn-primary:hover {
         background-color: #0096FF;
       }
@@ -36,7 +41,7 @@
     <div class="container">
       <h2 class="mb-4 text-center">{{ titulo }}</h2>
 
-      <!-- 🔹 MENSAGENS FLASH -->
+
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
@@ -51,7 +56,6 @@
       <div class="card mb-4 p-4">
         <h5 class="mb-3">{{ 'Editar Cultura' if cultura else 'Cadastrar Nova Cultura' }}</h5>
 
-        <!-- FORMULÁRIO FUNCIONAL -->
         <form 
           method="POST" 
           action="{% if cultura %}{{ url_for('cultura.criar_ou_editar_cultura', id_cultura=cultura.id_cultura) }}{% else %}{{ url_for('cultura.criar_ou_editar_cultura') }}{% endif %}"
@@ -82,7 +86,7 @@
 
           <div class="d-flex gap-2">
             <button type="submit" class="btn btn-primary px-4">Salvar</button>
-            <a href="{{ url_for('cultura.listar_culturas') }}" class="btn btn-secondary px-4">Cancelar</a>
+            <a href="{{ url_for('cultura.listar_culturas') }}" class="btn btn-secondary px-3">Cancelar</a>
           </div>
         </form>
       </div>

@@ -29,7 +29,7 @@ def fazer_login():
     # 2. Verifica se o usuário existe E se a senha confere
     if usuario and usuario.check_password(password):
         # Loga o usuário usando Flask-Login e o mantém logado (remember=True)
-        login_user(usuario, remember=True)
+        login_user(usuario, remember=False)
         flash(f'Bem-vindo(a), {usuario.nome}!', 'success')
         # Redireciona para o dashboard
         return redirect(url_for('main.dashboard'))
