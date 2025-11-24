@@ -38,6 +38,9 @@ def create_app(config_class=Config):
     
     from app.routes.maquinario_routes import maquinario_bp
     app.register_blueprint(maquinario_bp)
+    
+    from app.routes.cultivo_routes import cultivo_bp
+    app.register_blueprint(cultivo_bp)
 
    
     main_bp = Blueprint('main', __name__)
