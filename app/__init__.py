@@ -41,6 +41,9 @@ def create_app(config_class=Config):
     
     from app.routes.cultivo_routes import cultivo_bp
     app.register_blueprint(cultivo_bp)
+    
+    from app.routes.atividade_funcionario_routes import atividade_funcionario_bp
+    app.register_blueprint(atividade_funcionario_bp)
 
    
     main_bp = Blueprint('main', __name__)
