@@ -8,7 +8,7 @@ from datetime import datetime
 
 atividade_funcionario_bp = Blueprint('atividade_funcionario', __name__)
 
-@atividade_funcionario_bp.route('/atividades-funcionario', methods=['GET'])
+@atividade_funcionario_bp.route('/atividades_funcionario', methods=['GET'])
 @login_required
 def listar_atividades():
     """Lista todos os registros de atividade de funcionários."""

@@ -72,16 +72,33 @@
                 required
               >
             </div>
+            
             <div class="col-md-6">
               <label class="form-label">Classificação de Mercado</label>
-              <input 
-                type="text" 
+              <select 
                 name="classificacao_mercado" 
-                class="form-control" 
-                placeholder="Ex: Grãos, Frutas, Verduras" 
-                value="{{ cultura.classificacao_mercado if cultura else '' }}"
+                class="form-select"
               >
+                <option value="">-- Selecione uma Classificação (Opcional) --</option>
+                
+                {% set classificacoes = [
+                  'Grãos', 
+                  'Frutas', 
+                  'Verduras', 
+                  'Leguminosas', 
+                  'Tubérculos',
+                  'Sementes Oleaginosas'
+                ] %}
+                
+                {% for classificacao in classificacoes %}
+                  <option value="{{ classificacao }}"
+                          {% if cultura and cultura.classificacao_mercado == classificacao %}selected{% endif %}>
+                    {{ classificacao }}
+                  </option>
+                {% endfor %}
+              </select>
             </div>
+            
           </div>
 
           <div class="d-flex gap-2">
