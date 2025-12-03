@@ -11,55 +11,73 @@
         body {
             background-color: #f8f9fa;
         }
-
         #sidebar {
             width: 250px;
-            background-color: #0000FF;
-            /* Azul da Fazenda */
+            background-color: darkblue;
             color: white;
             position: fixed;
             height: 100vh;
             padding: 1.5rem 1rem;
             transition: all 0.3s;
         }
-
         #sidebar .nav-link {
             color: #d1d9ff;
             padding: 0.75rem 1rem;
             border-radius: 8px;
             transition: background-color 0.2s;
         }
-
         #sidebar .nav-link:hover,
         .nav-link.active {
-            background-color: #0096FF;
-            /* Azul mais claro ao passar o mouse ou ativo */
+            background-color: hsl(205, 100%, 30%);
             color: white;
         }
-
         #content {
             margin-left: 250px;
             padding: 1.5rem;
             min-height: 100vh;
         }
-
         .logo {
             font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 2rem;
             text-align: center;
         }
-
         .card {
             border-radius: 1rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 250px;
+            width: calc(100% - 250px);
+            background-color: #f8f9fa;
+            padding: 0.75rem 1rem;
+            border-top: 1px solid #dee2e6;
+        }
+        .footer span {
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+        .footer a {
+            color: darkblue;
+            margin-right: 1rem;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: hsl(205, 100%, 30%);
+        }
+        .footer img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            margin-right: 6px;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Sidebar de Navegação -->
     <div id="sidebar">
         <div class="logo">
             <i class="fas fa-tractor me-2"></i> Porteira Azul
@@ -101,7 +119,6 @@
                     <i class="fas fa-tasks me-2"></i> Atividades
                 </a>
             </li>
-            <!-- Separador -->
             <li class="nav-item mt-3 pt-2 border-top border-white opacity-25"></li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('auth.logout') }}">
@@ -111,7 +128,6 @@
         </ul>
     </div>
 
-    <!-- Conteúdo Principal -->
     <div id="content">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -125,10 +141,29 @@
         </div>
         {% endif %}
         {% endwith %}
-
-        <!-- Bloco para o conteúdo específico de cada página -->
         {% block content %}{% endblock %}
     </div>
+
+    <footer class="footer" id="footerSection">
+        <div class="d-flex align-items-center flex-wrap">
+            <span>Siga os criadores:</span>
+            <a href="https://github.com/fscorsini" target="_blank" class="d-flex align-items-center me-3">
+                <img src="https://github.com/fscorsini.png" alt="Fábio Corsini"> Fábio Corsini
+            </a>
+            <a href="https://github.com/BrianMartins2006" target="_blank" class="d-flex align-items-center me-3">
+                <img src="https://github.com/BrianMartins2006.png" alt="Brian Martins"> Brian Martins
+            </a>
+            <a href="https://github.com/jose1souza" target="_blank" class="d-flex align-items-center me-3">
+                <img src="https://github.com/jose1souza.png" alt="José Carlos"> Jose Carlos
+            </a>
+            <a href="https://github.com/Lucas04zx" target="_blank" class="d-flex align-items-center me-3">
+                <img src="https://github.com/Lucas04zx.png" alt="Lucas Antônio"> Lucas Antônio
+            </a>
+            <a href="https://github.com/Hxrpp" target="_blank" class="d-flex align-items-center me-3">
+                <img src="https://github.com/Hxrpp.png" alt="Nicolas"> Nicolas
+            </a>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     {% block scripts %}{% endblock %}

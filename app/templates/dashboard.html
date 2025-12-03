@@ -7,15 +7,8 @@
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Compartilhar</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
-            </div>
-        </div>
     </div>
 
-    <!-- Cards de Resumo Rápido -->
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="card text-white bg-primary mb-3">
@@ -46,9 +39,7 @@
         </div>
     </div>
 
-    <!-- Gráficos -->
     <div class="row">
-        <!-- Gráfico de Produção -->
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-header">
@@ -61,7 +52,6 @@
             </div>
         </div>
 
-        <!-- Gráfico de Horas Trabalhadas -->
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-header">
@@ -76,7 +66,6 @@
     </div>
 
     <div class="row">
-        <!-- Gráfico de Custo Maquinário -->
         <div class="col-md-12 mb-4">
             <div class="card h-100">
                 <div class="card-header">
@@ -95,11 +84,9 @@
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Configuração comum para gráficos
     Chart.defaults.font.family = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.color = '#292b2c';
 
-    // 1. Gráfico de Produção
     var ctxProducao = document.getElementById("chartProducao");
     var myBarChart = new Chart(ctxProducao, {
         type: 'bar',
@@ -130,7 +117,6 @@
     }
     });
 
-    // 2. Gráfico de Horas (Pizza)
     var ctxHoras = document.getElementById("chartHoras");
     var myPieChart = new Chart(ctxHoras, {
         type: 'pie',
@@ -143,11 +129,10 @@
         },
     });
 
-    // 3. Gráfico de Maquinário (Barra Horizontal)
     var ctxMaquinario = document.getElementById("chartMaquinario");
     var myLineChart = new Chart(ctxMaquinario, {
         type: 'bar',
-        indexAxis: 'y', // Barra horizontal
+        indexAxis: 'y', 
         data: {
             labels: {{ chart_maquinario.labels | tojson }},
     datasets: [{
