@@ -1,120 +1,84 @@
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Maquinários | Fazenda Porteira Azul ERP</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      body {
-        font-family: "Segoe UI", sans-serif;
-        background-color: #f3f4f6;
-        padding: 2rem;
-      }
-      .card {
-        border-radius: 16px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      }
-      .btn-primary {
-        background-color: #0000FF;
-        border: none;
-        border-radius: 10px;
-      }
-      .btn-primary:hover {
-        background-color: #0096FF;
-      }
-      h2 {
-        font-weight: 700;
-        color: #0000FF;
-      }
-      .btn-warning, .btn-danger {
-        border-radius: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h2 class="mb-4 text-center">Controle de Maquinário</h2>
+{% extends "base.html" %}
 
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
+{% block title %}Maquinários | Fazenda Porteira Azul ERP{% endblock %}
 
-      <div class="card p-4 mb-3">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="mb-0">Lista de Maquinários</h5>
-          <!-- Link para a rota de criação de maquinário -->
-          <a href="{{ url_for('maquinario.criar_ou_editar_maquinario') }}" class="btn btn-primary">Novo Maquinário</a>
-        </div>
-
-        {% if maquinarios %}
-          <div class="table-responsive">
-            <table class="table table-striped align-middle">
-              <thead>
-                <tr>
-                  <th>Tipo</th>
-                  <th>Modelo</th>
-                  <th>Aquisição</th>
-                  <th>Valor/Hora (R$)</th>
-                  <th>Consumo (L/h)</th>
-                  <th>Cultura</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for m in maquinarios %}
-                <tr>
-                  <td>{{ m.tipo or '-' }}</td>
-                  <td>{{ m.modelo }}</td>
-                  <td>
-                    <!-- Formata a data se existir -->
-                    {{ m.data_aquisicao.strftime('%d/%m/%Y') if m.data_aquisicao else '-' }}
-                  </td>
-                  <td>
-                    {% if m.valor_hora %}
-                        R$ {{ "%.2f"|format(m.valor_hora|float) }}
-                    {% else %}
-                        -
-                    {% endif %}
-                  </td>
-                  <td>
-                    {% if m.consumo_medio %}
-                        {{ "%.2f"|format(m.consumo_medio|float) }} L/h
-                    {% else %}
-                        -
-                    {% endif %}
-                  </td>
-                  <td>
-                    <!-- Exibe o nome da cultura ou '-' se não houver fk -->
-                    {{ m.cultura.nome if m.cultura else 'Sem Alocação' }}
-                  </td>
-                  <td>
-                    <!-- Botão Editar -->
-                    <a href="{{ url_for('maquinario.criar_ou_editar_maquinario', id_maquina=m.id_maquina) }}" class="btn btn-warning btn-sm">Editar</a>
-                    
-                    <!-- Formulário de Exclusão -->
-                    <form action="{{ url_for('maquinario.excluir_maquinario', id_maquina=m.id_maquina) }}" method="POST" style="display:inline;">
-                      <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente excluir o maquinário {{ m.modelo }}?')">Excluir</button>
-                    </form>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        {% else %}
-          <p class="text-center text-muted">Nenhum maquinário cadastrado.</p>
-        {% endif %}
-      </div>
+{% block content %}
+<div class="container-fluid">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Controle de Maquinário</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <a href="{{ url_for('maquinario.criar_ou_editar_maquinario') }}" class="btn btn-sm btn-primary">
+        <i class="fas fa-plus me-1"></i> Novo Maquinário
+      </a>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      {% if maquinarios %}
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Tipo</th>
+              <th>Modelo</th>
+              <th>Aquisição</th>
+              <th>Valor/Hora (R$)</th>
+              <th>Consumo (L/h)</th>
+              <th>Cultura</th>
+              <th class="text-end">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for m in maquinarios %}
+            <tr>
+              <td>{{ m.tipo or '-' }}</td>
+              <td>{{ m.modelo }}</td>
+              <td>
+                {{ m.data_aquisicao.strftime('%d/%m/%Y') if m.data_aquisicao else '-' }}
+              </td>
+              <td>
+                {% if m.valor_hora %}
+                R$ {{ "%.2f"|format(m.valor_hora|float) }}
+                {% else %}
+                -
+                {% endif %}
+              </td>
+              <td>
+                {% if m.consumo_medio %}
+                {{ "%.2f"|format(m.consumo_medio|float) }} L/h
+                {% else %}
+                -
+                {% endif %}
+              </td>
+              <td>
+                {{ m.cultura.nome if m.cultura else 'Sem Alocação' }}
+              </td>
+              <td class="text-end">
+                <a href="{{ url_for('maquinario.criar_ou_editar_maquinario', id_maquina=m.id_maquina) }}"
+                  class="btn btn-outline-primary btn-sm me-1">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <form action="{{ url_for('maquinario.excluir_maquinario', id_maquina=m.id_maquina) }}" method="POST"
+                  style="display:inline;">
+                  <button type="submit" class="btn btn-outline-danger btn-sm"
+                    onclick="return confirm('Deseja realmente excluir o maquinário {{ m.modelo }}?')">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="text-center py-5 text-muted">
+        <i class="fas fa-tractor fa-3x mb-3"></i>
+        <p>Nenhum maquinário cadastrado.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

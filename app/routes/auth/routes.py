@@ -9,7 +9,7 @@ auth_bp = Blueprint('auth', __name__)
 def index():
     # Se o usuário já estiver logado, redireciona para o dashboard
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard'))
+        return redirect(url_for('dashboard.index'))
     return render_template('login.html')
 
 @auth_bp.route('/cadastro', methods=['GET'])
@@ -32,7 +32,7 @@ def fazer_login():
         login_user(usuario, remember=False)
         flash(f'Bem-vindo(a), {usuario.nome}!', 'success')
         # Redireciona para o dashboard
-        return redirect(url_for('main.dashboard'))
+        return redirect(url_for('dashboard.index'))
     else:
         # Mensagem de erro e volta para a tela de login
         flash('E-mail ou senha incorretos.', 'danger')

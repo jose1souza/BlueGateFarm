@@ -1,145 +1,73 @@
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ titulo }} | Fazenda Porteira Azul ERP</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      body {
-        font-family: "Segoe UI", sans-serif;
-        background-color: #f3f4f6;
-        padding: 2rem;
-      }
-      .card {
-        border-radius: 16px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      }
-      .btn-primary {
-        background-color: #0000FF;
-        border: none;
-        border-radius: 10px;
-      }
-      .btn-secondary {
-        background-color: #6c757d;
-        border: none;
-        border-radius: 10px;
-      }
-      .btn-primary:hover {
-        background-color: #0096FF;
-      }
-      .btn-warning, .btn-danger {
-        border-radius: 10px;
-      }
-      h2 {
-        font-weight: 700;
-        color: #0000FF;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h2 class="mb-4 text-center">{{ titulo }}</h2>
+{% extends "base.html" %}
 
+{% block title %}{{ titulo }} | Fazenda Porteira Azul ERP{% endblock %}
 
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
+{% block content %}
+<div class="container-fluid">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ titulo }}</h1>
+  </div>
 
-      <div class="card mb-4 p-4">
-        <h5 class="mb-3">{{ 'Editar Funcionário' if funcionario else 'Cadastrar Novo Funcionário' }}</h5>
-        
-        <!-- Ação do Formulário: Usa as rotas de Funcionário -->
-        <form 
-          method="POST" 
-          action="{% if funcionario %}{{ url_for('funcionario.criar_ou_editar_funcionario', id_funcionario=funcionario.id_funcionario) }}{% else %}{{ url_for('funcionario.criar_ou_editar_funcionario') }}{% endif %}"
-        >
-          <div class="row mb-3">
-            
-            <!-- Campo: Nome -->
-            <div class="col-md-6">
-              <label class="form-label">Nome</label>
-              <input 
-                type="text" 
-                name="nome" 
-                class="form-control" 
-                placeholder="Nome completo do funcionário" 
-                value="{{ funcionario.nome if funcionario else '' }}" 
-                required
-              >
-            </div>
-            
-            <!-- Campo: Cargo -->
-            <div class="col-md-6">
-              <label class="form-label">Cargo</label>
-              <input 
-                type="text" 
-                name="cargo" 
-                class="form-control" 
-                placeholder="Ex: Zelador, Administrador, Colhedor" 
-                value="{{ funcionario.cargo if funcionario else '' }}"
-              >
-            </div>
-          </div>
-          
-          <div class="row mb-3">
-            <!-- Campo: Salário por Hora -->
-            <div class="col-md-4">
-              <label class="form-label">Salário/Hora</label>
-              <input 
-                type="number" 
-                step="0.01"
-                name="salario_hora" 
-                class="form-control" 
-                placeholder="0.00" 
-                value="{{ funcionario.salario_hora if funcionario else '' }}"
-              >
-            </div>
-            
-            <!-- Campo: Contato -->
-            <div class="col-md-4">
-              <label class="form-label">Contato</label>
-              <input 
-                type="text" 
-                name="contato" 
-                class="form-control" 
-                placeholder="Telefone ou Email" 
-                value="{{ funcionario.contato if funcionario else '' }}"
-              >
-            </div>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-4">{{ 'Editar Funcionário' if funcionario else 'Cadastrar Novo Funcionário' }}</h5>
 
-            <!-- Campo: Cultura Responsável (FK) -->
-            <div class="col-md-4">
-              <label class="form-label">Cultura Responsável</label>
-              <select 
-                  name="id_cultura_fk" 
-                  class="form-select">
-                  <option value="">-- Nenhuma (Opcional) --</option>
-                  {% for cultura in culturas %}
-                      <option value="{{ cultura.id_cultura }}"
-                              {% if funcionario and funcionario.id_cultura_fk == cultura.id_cultura %}selected{% endif %}>
-                          {{ cultura.nome }}
-                      </option>
-                  {% endfor %}
-              </select>
-            </div>
+      <!-- Ação do Formulário: Usa as rotas de Funcionário -->
+      <form method="POST"
+        action="{% if funcionario %}{{ url_for('funcionario.criar_ou_editar_funcionario', id_funcionario=funcionario.id_funcionario) }}{% else %}{{ url_for('funcionario.criar_ou_editar_funcionario') }}{% endif %}">
+        <div class="row mb-3">
+
+          <!-- Campo: Nome -->
+          <div class="col-md-6">
+            <label class="form-label">Nome</label>
+            <input type="text" name="nome" class="form-control" placeholder="Nome completo do funcionário"
+              value="{{ funcionario.nome if funcionario else '' }}" required>
           </div>
 
-          <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary px-4">Salvar</button>
-            <a href="{{ url_for('funcionario.listar_funcionarios') }}" class="btn btn-secondary px-3">Cancelar</a>
+          <!-- Campo: Cargo -->
+          <div class="col-md-6">
+            <label class="form-label">Cargo</label>
+            <input type="text" name="cargo" class="form-control" placeholder="Ex: Zelador, Administrador, Colhedor"
+              value="{{ funcionario.cargo if funcionario else '' }}">
           </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="row mb-3">
+          <!-- Campo: Salário por Hora -->
+          <div class="col-md-4">
+            <label class="form-label">Salário/Hora</label>
+            <input type="number" step="0.01" name="salario_hora" class="form-control" placeholder="0.00"
+              value="{{ funcionario.salario_hora if funcionario else '' }}">
+          </div>
+
+          <!-- Campo: Contato -->
+          <div class="col-md-4">
+            <label class="form-label">Contato</label>
+            <input type="text" name="contato" class="form-control" placeholder="Telefone ou Email"
+              value="{{ funcionario.contato if funcionario else '' }}">
+          </div>
+
+          <!-- Campo: Cultura Responsável (FK) -->
+          <div class="col-md-4">
+            <label class="form-label">Cultura Responsável</label>
+            <select name="id_cultura_fk" class="form-select">
+              <option value="">-- Nenhuma (Opcional) --</option>
+              {% for cultura in culturas %}
+              <option value="{{ cultura.id_cultura }}" {% if funcionario and
+                funcionario.id_cultura_fk==cultura.id_cultura %}selected{% endif %}>
+                {{ cultura.nome }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary px-4">Salvar</button>
+          <a href="{{ url_for('funcionario.listar_funcionarios') }}" class="btn btn-outline-secondary px-3">Cancelar</a>
+        </div>
+      </form>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+  </div>
+</div>
+{% endblock %}

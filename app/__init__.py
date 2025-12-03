@@ -48,9 +48,8 @@ def create_app(config_class=Config):
    
     main_bp = Blueprint('main', __name__)
 
-    @main_bp.route('/dashboard')
-    def dashboard():
-        return render_template_string("<h1>Dashboard - Acesso Autorizado!</h1><p>Em desenvolvimento...</p>")
+    from app.routes.dashboard_routes import dashboard_bp
+    app.register_blueprint(dashboard_bp)
 
     app.register_blueprint(main_bp)
 
