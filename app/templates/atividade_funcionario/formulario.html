@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }} | Fazenda Porteira Azul ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ titulo }}</h1>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-4">{{ 'Editar Registro' if atividade else 'Novo Registro de Atividade' }}</h5>
+
+      <form method="POST"
+        action="{% if atividade %}{{ url_for('atividade_funcionario.criar_ou_editar_atividade', id_atividade=atividade.id_atividade) }}{% else %}{{ url_for('atividade_funcionario.criar_ou_editar_atividade') }}{% endif %}">
+
+        <div class="mb-3">
+          <label class="form-label">Funcionário *</label>
+          <select name="id_funcionario" class="form-select" required>
+            <option value="">-- Selecione o Funcionário --</option>
+            {% for f in funcionarios %}
+            <option value="{{ f.id_funcionario }}" {% if atividade and atividade.id_funcionario==f.id_funcionario
+              %}selected{% endif %}>
+              {{ f.nome }} ({{ f.cargo or 'Sem Cargo' }})
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Data da Atividade *</label>
+            <input type="date" name="data" class="form-control"
+              value="{{ atividade.data.strftime('%Y-%m-%d') if atividade and atividade.data else '' }}" required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Horas Trabalhadas</label>
+            <input type="number" step="0.01" name="horas_trabalhadas" class="form-control" placeholder="Ex: 8.00"
+              value="{{ atividade.horas_trabalhadas if atividade else '' }}">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Descrição da Tarefa</label>
+          <textarea name="descricao" class="form-control" rows="3"
+            placeholder="Ex: Colheita do milho no Talhão 3; Manutenção do Trator John Deere">{{ atividade.descricao if atividade else '' }}</textarea>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary px-4">Salvar</button>
+          <a href="{{ url_for('atividade_funcionario.listar_atividades') }}"
+            class="btn btn-outline-secondary px-3">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

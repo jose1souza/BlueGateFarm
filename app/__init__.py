@@ -24,7 +24,6 @@ def create_app(config_class=Config):
     def load_user(user_id):
         return db.session.get(Usuario, int(user_id))
 
-    # ✅ Importa e registra os blueprints corretamente
     from app.routes.auth import routes as auth_routes
     app.register_blueprint(auth_routes.auth_bp)
 
@@ -33,13 +32,24 @@ def create_app(config_class=Config):
 
     from app.routes.cultura_routes import cultura_bp
     app.register_blueprint(cultura_bp)
+    
+    from app.routes.funcionario_routes import funcionario_bp
+    app.register_blueprint(funcionario_bp)
+    
+    from app.routes.maquinario_routes import maquinario_bp
+    app.register_blueprint(maquinario_bp)
+    
+    from app.routes.cultivo_routes import cultivo_bp
+    app.register_blueprint(cultivo_bp)
+    
+    from app.routes.atividade_funcionario_routes import atividade_funcionario_bp
+    app.register_blueprint(atividade_funcionario_bp)
 
-    # Rota simples para dashboard
+   
     main_bp = Blueprint('main', __name__)
 
-    @main_bp.route('/dashboard')
-    def dashboard():
-        return render_template_string("<h1>Dashboard - Acesso Autorizado!</h1><p>Em desenvolvimento...</p>")
+    from app.routes.dashboard_routes import dashboard_bp
+    app.register_blueprint(dashboard_bp)
 
     app.register_blueprint(main_bp)
 
